@@ -9,20 +9,23 @@ export default function Index() {
   return (
     <BackgroundContainer>
       <View>
-        <Text className="text-5xl text-white font-bold uppercase border-b pb-4 border-white">
+        <Text className="text-5xl text-[#e8b923] font-bold uppercase border-b pb-4 border-[#e8b923]">
           King Game
         </Text>
         <View className="flex flex-col gap-6 mt-14 items-center justify-center">
-          <TouchableOpacity className="border border-white flex items-center justify-center rounded-xl w-[160px] bg-white/25">
-            <Text className="text-2xl text-white py-4 px-6 rounded-xl font-medium">
+          <TouchableOpacity
+            onPress={() => router.push("/players")}
+            className="border border-white/25 flex items-center justify-center rounded-xl w-[160px] bg-amber-500/50 shadow-lg"
+          >
+            <Text className="text-2xl text-orange-900 py-4 px-6 rounded-xl font-medium">
               Play Game
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className="border border-white flex items-center justify-center rounded-xl w-[160px] bg-white/25"
+            className="border border-amber-300/30 flex items-center justify-center rounded-xl w-[160px] bg-orange-800 shadow-lg"
             onPress={() => router.push("/modal")}
           >
-            <Text className="text-2xl text-white py-4 px-6 rounded-xl font-medium">
+            <Text className="text-2xl text-[#e8b923] py-4 px-6 rounded-xl font-medium">
               How To Play
             </Text>
           </TouchableOpacity>

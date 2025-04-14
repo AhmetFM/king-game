@@ -16,6 +16,24 @@ export default function RootLayout() {
           headerTintColor: "#faa",
         }}
       />
+      <Stack.Screen
+        name="players"
+        options={{
+          headerTransparent: true,
+          headerTitle: "",
+          headerBackTitle: "Go Back",
+          headerTintColor: "orange",
+        }}
+      />
+      <Stack.Screen
+        name="game"
+        options={{
+          headerTransparent: true,
+          headerTitle: "",
+          headerBackTitle: "Go Back",
+          headerTintColor: "orange",
+        }}
+      />
     </Stack>
   );
 }
