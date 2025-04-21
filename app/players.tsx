@@ -14,6 +14,10 @@ const Players = () => {
 
   const handleStartGame = () => {
     // TODO: Implement game start logic
+    if (playerNames.some((name) => name.trim() === "")) {
+      alert("Please enter names for all players.");
+      return;
+    }
     console.log("Starting game with players:", playerNames);
     router.push("/game");
   };
