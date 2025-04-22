@@ -8,6 +8,7 @@ const BackgroundContainer = ({ children }: { children: React.ReactNode }) => {
       className="flex-1 flex items-center justify-center w-full h-screen"
       source={require("../assets/images/background-image.png")}
     >
+      <View className="bg-black absolute flex-1 w-full h-full opacity-25" />
       <SafeAreaView className="flex items-center justify-center flex-1">
         {children}
       </SafeAreaView>

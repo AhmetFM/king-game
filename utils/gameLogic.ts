@@ -1,4 +1,15 @@
-export const GAME_CONSTANTS = [
+export type GAME_TYPE = {
+  id:string,
+  name:string,
+  description:string,
+  penaltyPerUnit?:number,
+  rewardPerUnit?:number,
+  unit:string,
+  maxPenalty?:number,
+  maxReward?:number
+}
+
+export const GAME_CONSTANTS:GAME_TYPE[] = [
     {
       "id": "el_almaz",
       "name": "El Almaz",
@@ -12,6 +23,7 @@ export const GAME_CONSTANTS = [
       "name": "Kupa Almaz",
       "description": "Amaç Kupa serisinden hiç kağıt almamaktır.",
       "penaltyPerUnit": 30,
+
       "unit": "kupa",
       "maxPenalty":13
     },
