@@ -1,7 +1,9 @@
+import { GameProvider } from "@/providers/game-provider";
+import { AntDesign } from "@expo/vector-icons";
+import { router, Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../global.css";
-import { Stack } from "expo-router";
-import { GameProvider } from "@/providers/game-provider";
+import { TouchableOpacity } from "react-native";
 
 export default function RootLayout() {
   return (
@@ -25,7 +27,7 @@ export default function RootLayout() {
             options={{
               headerTransparent: true,
               headerTitle: "",
-              headerBackTitle: "Go Back",
+              headerBackTitle: "Geri dön",
               headerTintColor: "orange",
             }}
           />
@@ -34,7 +36,23 @@ export default function RootLayout() {
             options={{
               headerTransparent: true,
               headerTitle: "",
-              headerBackTitle: "Go Back",
+              headerBackTitle: "Geri dön",
+              headerTintColor: "orange",
+              headerRight(props) {
+                return (
+                  <TouchableOpacity onPress={() => router.navigate("/table")}>
+                    <AntDesign name="table" size={24} color={props.tintColor} />
+                  </TouchableOpacity>
+                );
+              },
+            }}
+          />
+          <Stack.Screen
+            name="table"
+            options={{
+              headerTransparent: true,
+              headerTitle: "",
+              headerBackTitle: "Geri dön",
               headerTintColor: "orange",
             }}
           />

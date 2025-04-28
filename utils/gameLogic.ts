@@ -11,8 +11,16 @@ export type GAME_TYPE = {
 
 export const GAME_CONSTANTS:GAME_TYPE[] = [
     {
+      "id": "koz",
+      "name": "Koz",
+      "description": "Amaç en fazla eli almaktır.",
+      "rewardPerUnit": 50,
+      "unit": "el",
+      "maxReward":13
+    },
+    {
       "id": "el_almaz",
-      "name": "El Almaz",
+      "name": "El almaz",
       "description": "Bu oyunda amaç hiç el almamaktır. Yere atılan en büyük kâğıt o eli alır.",
       "penaltyPerUnit": 50,
       "unit": "el",
@@ -20,16 +28,15 @@ export const GAME_CONSTANTS:GAME_TYPE[] = [
     },
     {
       "id": "kupa_almaz",
-      "name": "Kupa Almaz",
+      "name": "Kupa almaz",
       "description": "Amaç Kupa serisinden hiç kağıt almamaktır.",
       "penaltyPerUnit": 30,
-
       "unit": "kupa",
       "maxPenalty":13
     },
     {
       "id": "kiz_almaz",
-      "name": "Kız Almaz",
+      "name": "Kız almaz",
       "description": "Amaç kızları (hangi tür olursa olsun) almamaktır.",
       "penaltyPerUnit": 100,
       "unit": "kız",
@@ -37,7 +44,7 @@ export const GAME_CONSTANTS:GAME_TYPE[] = [
     },
     {
       "id": "erkek_almaz",
-      "name": "Erkek Almaz",
+      "name": "Erkek almaz",
       "description": "Amaç papaz ve valeleri almamaktır.",
       "penaltyPerUnit": 60,
       "unit": "erkek",
@@ -45,7 +52,7 @@ export const GAME_CONSTANTS:GAME_TYPE[] = [
     },
     {
       "id": "son_iki",
-      "name": "Son İki",
+      "name": "Son iki",
       "description": "Amaç son iki eli almamaktır.",
       "penaltyPerUnit": 180,
       "unit": "el",
@@ -53,18 +60,10 @@ export const GAME_CONSTANTS:GAME_TYPE[] = [
     },
     {
       "id": "rifki",
-      "name": "Rıfkı (Kupa Papazı)",
+      "name": "Rıfkı",
       "description": "Amaç Kupa Papazı'nı almamaktır.",
       "penaltyPerUnit": 320,
       "unit": "rifki",
       "maxPenalty":1
     },
-    {
-      "id": "koz",
-      "name": "Koz Oyunu",
-      "description": "Amaç en fazla eli almaktır.",
-      "rewardPerUnit": 50,
-      "unit": "el",
-      "maxReward":13
-    }
   ]

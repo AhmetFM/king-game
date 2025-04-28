@@ -1,27 +1,46 @@
-import { GameContext, Player } from "@/providers/game-provider";
-import { GAME_CONSTANTS, GAME_TYPE } from "@/utils/gameLogic";
+import { GameContext, penaltyGames, Player } from "@/providers/game-provider";
+import { GAME_CONSTANTS } from "@/utils/gameLogic";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import BottomSheet, {
-  BottomSheetFlatList,
+import {
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import React, { useContext, useRef, useState } from "react";
-import { Button, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import RoundModal from "./round-modal";
 
 const GameBoard = () => {
   const sheetRef = useRef<BottomSheetModal>(null);
   const snapPoints = ["35%"];
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
 
-  const { players } = useContext(GameContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { players, selectTrumpGame, selectPenaltyGame, rounds, playerId } =
+    useContext(GameContext);
 
   const handleGameSelect = (gameName: string) => {
     setSelectedGame(gameName);
-    console.log(selectedGame);
+  };
+
+  const handleStartGame = () => {
+    if (selectedGame === "Koz") {
+      selectTrumpGame(playerId, selectedGame);
+      setIsModalOpen(true);
+      setSelectedGame(null);
+    } else {
+      selectPenaltyGame(playerId, selectedGame);
+      setIsModalOpen(true);
+      setSelectedGame(null);
+    }
   };
 
   return (
@@ -29,7 +48,9 @@ const GameBoard = () => {
       <BottomSheetModalProvider>
         {players.map((player: Player, k: number) => (
           <View
-            className="flex flex-row items-center justify-between w-[100vw] px-4 border-b-2 border-amber-600 h-28"
+            className={`flex flex-row items-center justify-between w-[100vw] px-4 border-b-2 border-amber-600 h-28 ${
+              player.id === playerId && "bg-white/25"
+            } `}
             key={k}
           >
             <View className="flex flex-row gap-2">
@@ -78,15 +99,30 @@ const GameBoard = () => {
                 />
               </View>
             </View>
-            <Text className="text-white text-xl">{player.name}</Text>
+            <Text
+              className={`text-white text-xl ${
+                player.id === playerId && "font-bold"
+              } `}
+            >
+              {player.name}
+            </Text>
             <Text className="text-white text-xl">{player.score}</Text>
           </View>
         ))}
+        <View className="flex flex-row flex-wrap gap-4 items-center justify-center my-4">
+          {penaltyGames.map((p) => (
+            <Text className="text-white font-medium" key={p.name}>
+              {p.name} - {p.timesPlayed == 0 ? 2 : p.timesPlayed == 1 ? 1 : 0}
+            </Text>
+          ))}
+        </View>
         <View className="flex-1 items-center">
-          <Text className="text-white text-2xl">Select Game</Text>
-          <TouchableOpacity onPress={() => sheetRef.current?.present()}>
+          <TouchableOpacity
+            className="flex items-center justify-center"
+            onPress={() => sheetRef.current?.present()}
+          >
             <Text className="text-amber-400 text-xl">
-              {selectedGame || "Choose a game"}
+              {selectedGame || "Oyunu seç"}
             </Text>
           </TouchableOpacity>
           <BottomSheetModal
@@ -100,6 +136,9 @@ const GameBoard = () => {
             }}
             handleIndicatorStyle={{
               backgroundColor: "orange",
+            }}
+            backgroundStyle={{
+              backgroundColor: "#27272a",
             }}
           >
             <BottomSheetView className="bg-zinc-800 h-full">
@@ -115,7 +154,7 @@ const GameBoard = () => {
                     }`}
                   >
                     <Text
-                      className={`text-2xl text-center ${
+                      className={`text-xl text-center ${
                         selectedGame === item.name
                           ? "text-amber-400 font-bold"
                           : "text-gray-300"
@@ -126,19 +165,24 @@ const GameBoard = () => {
                   </TouchableOpacity>
                 ))}
               </ScrollView>
-              <Button
-                title="Select"
+              <Pressable
+                className="flex items-center justify-center h-14 border-t border-amber-500 disabled:opacity-25 disabled:"
                 onPress={() => {
                   if (selectedGame) {
                     sheetRef.current?.dismiss();
+                    handleStartGame();
                   }
                 }}
-                color={"orange"}
                 disabled={!selectedGame}
-              />
+              >
+                <Text className="text-orange-500 text-2xl font-medium disabled:text-orange-900">
+                  Seç
+                </Text>
+              </Pressable>
             </BottomSheetView>
           </BottomSheetModal>
         </View>
+        <RoundModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       </BottomSheetModalProvider>
     </SafeAreaView>
   );

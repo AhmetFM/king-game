@@ -46,7 +46,7 @@ const Players = () => {
             KING
           </Text>
           <Text className="text-gray-300 text-lg mb-8 font-medium italic">
-            Enter Player Names
+            Oyuncuların ismini girin
           </Text>
 
           <View className="w-full space-y-12 flex flex-col gap-6 mb-8">
@@ -54,12 +54,12 @@ const Players = () => {
               <View key={index} className="relative">
                 <View className="absolute -top-3 left-4 bg-zinc-800 px-2 z-10">
                   <Text className="text-amber-400 text-sm">
-                    Player {index + 1}
+                    Oyuncu {index + 1}
                   </Text>
                 </View>
                 <TextInput
                   className="min-w-32 max-w-48 min-h-16 bg-orange-800 text-gray-100 rounded-lg px-4 py-3 text-xl border-2 border-amber-500/30 focus:border-amber-500"
-                  placeholder={`Player ${index + 1}`}
+                  placeholder={`Oyuncu ${index + 1}`}
                   placeholderTextColor="#9CA3AF"
                   value={playerNames[index]}
                   maxLength={16}
@@ -74,7 +74,7 @@ const Players = () => {
             onPress={handleStartGame}
           >
             <Text className="text-gray-900 text-xl font-bold text-center">
-              Start Game
+              Oyuna başla
             </Text>
           </TouchableOpacity>
         </KeyboardAvoidingView>
