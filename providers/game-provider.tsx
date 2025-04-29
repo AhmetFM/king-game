@@ -1,5 +1,6 @@
 import React, { createContext, ReactNode, useState } from "react";
 import { GAME_CONSTANTS } from "../utils/gameLogic";
+import { router } from "expo-router";
 
 export type Player = {
   id: number;
@@ -9,7 +10,7 @@ export type Player = {
   score: number; // Başlangıçta 0
 };
 
-type GameRound = {
+export type GameRound = {
   roundNumber: number;
   selectedBy: number; // Oyunu seçen oyuncunun id'si
   gameName: string;
@@ -41,6 +42,11 @@ export const penaltyGames: PenaltyGame[] = [
   { name: "Rıfkı", timesPlayed: 0 },
 ];
 
+// Function to get available penalty games
+export const getAvailablePenaltyGames = () => {
+  return penaltyGames.filter((game) => game.timesPlayed < 2);
+};
+
 export const GameContext = createContext<any>(undefined);
 
 export const GameProvider = ({ children }: { children: ReactNode }) => {
@@ -51,6 +57,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [playerId, setPlayerId] = useState<number>(0);
   const [rounds, setRounds] = useState<GameRound[]>([]);
   const [maxValue, setMaxValue] = useState<number | undefined>(undefined);
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [winnerId, setWinnerId] = useState<number | undefined>(undefined);
 
   const setPlayerValues = (players: string[]) => {
     setPlayers(
@@ -69,10 +77,14 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     const player = players?.find((p: Player) => p.id === playerId);
     const gameConfig = GAME_CONSTANTS.find((g) => g.name === gameName);
 
-    if (!game || game.timesPlayed >= 2)
-      return alert("Bu ceza oyunu 2 kez oynandı.");
-    if (!player || player.penaltiesLeft <= 0)
-      return alert("Bu oyuncunun ceza hakkı kalmadı.");
+    if (!game || game.timesPlayed >= 2) {
+      alert("Bu ceza oyunu 2 kez oynandı.");
+      return false;
+    }
+    if (!player || player.penaltiesLeft <= 0) {
+      alert("Bu oyuncunun ceza hakkı kalmadı.");
+      return false;
+    }
 
     // güncelle
     game.timesPlayed += 1;
@@ -88,14 +100,17 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       type: "penalty",
       results: [], // sonra girilecek
     });
+    return true;
   }
 
   function selectTrumpGame(playerId: number, gameName: string) {
     const player = players?.find((p: Player) => p.id === playerId);
     const gameConfig = GAME_CONSTANTS.find((g) => g.name === gameName);
 
-    if (!player || player.trumpsLeft <= 0)
-      return alert("Bu oyuncunun koz hakkı kalmadı.");
+    if (!player || player.trumpsLeft <= 0) {
+      alert("Bu oyuncunun koz hakkı kalmadı.");
+      return false;
+    }
 
     // güncelle
     player.trumpsLeft -= 1;
@@ -108,6 +123,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       type: "trump",
       results: [], // sonra girilecek
     });
+    return true;
   }
 
   function updateRoundResults(
@@ -134,6 +150,22 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     setPlayerId(tempId);
   }
 
+  function findAndSetWinnerPlayer() {
+    const id = players?.sort((a: Player, b: Player) => b.score - a.score)[0].id;
+    setWinnerId(id);
+  }
+
+  function resetGame() {
+    setPlayers(undefined);
+    setCurrentRound(undefined);
+    setPlayerId(0);
+    setRounds([]);
+    setMaxValue(undefined);
+    setIsGameOver(false);
+    setWinnerId(undefined);
+    router.replace("/players");
+  }
+
   return (
     <GameContext.Provider
       value={{
@@ -146,6 +178,12 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         maxValue,
         updateRoundResults,
         playerId,
+        isGameOver,
+        findAndSetWinnerPlayer,
+        setIsGameOver,
+        winnerId,
+        setWinnerId,
+        resetGame,
         updateCurrentPlayerId,
       }}
     >

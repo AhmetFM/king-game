@@ -53,6 +53,9 @@ const RoundModal = ({ isModalOpen, setIsModalOpen }: RoundModalProps) => {
     maxValue,
     updateRoundResults,
     updateCurrentPlayerId,
+    setWinnerId,
+    setIsGameOver,
+    findAndSetWinnerPlayer,
   } = useContext(GameContext);
 
   const totalValue = values.reduce((acc, curr) => acc + curr, 0);
@@ -72,36 +75,62 @@ const RoundModal = ({ isModalOpen, setIsModalOpen }: RoundModalProps) => {
   const handleFinishRound = () => {
     if (!currentRound) return;
 
-    const results = values.map((points, index) => ({
+    /* const results = values.map((points, index) => ({
       playerId: index,
       points,
-    }));
+    })); */
 
-    //Koz eli sonrası score update kısmı
-    players.forEach((p: Player) => {
-      if (rounds[currentRound - 1].type === "trump") {
-        let reward = GAME_CONSTANTS.find((g) => g.name == "Koz")
-          ?.rewardPerUnit!;
-        p.score += values[p.id] * reward;
-      } else if (rounds[currentRound - 1].type == "penalty") {
-        let penalty = GAME_CONSTANTS.find(
-          (g) => g.name === rounds[currentRound - 1].gameName
-        )?.penaltyPerUnit;
+    if (rounds[currentRound - 1].type === "trump") {
+      //If game was a trump game
+      let reward = GAME_CONSTANTS.find((g) => g.name == "Koz")?.rewardPerUnit!;
 
-        if (!penalty) {
-          return alert("Penaltı yok");
+      const results = values.map((points, index) => {
+        if (points >= 10) {
+          setWinnerId(index);
+          setIsGameOver(true);
         }
+        return {
+          playerId: index,
+          points: points * reward,
+        };
+      });
 
-        p.score -= values[p.id] * penalty;
+      players.forEach((p: Player) => {
+        p.score += values[p.id] * reward;
+      });
+
+      updateRoundResults(currentRound, results);
+    } else if (rounds[currentRound - 1].type == "penalty") {
+      //If game was a penalty game
+      let penalty = GAME_CONSTANTS.find(
+        (g) => g.name === rounds[currentRound - 1].gameName
+      )?.penaltyPerUnit;
+
+      if (!penalty) {
+        return alert("Penaltı yok");
       }
-    });
 
-    updateRoundResults(currentRound, results);
+      const results = values.map((points, index) => ({
+        playerId: index,
+        points: -(points * penalty),
+      }));
+
+      players.forEach((p: Player) => {
+        p.score -= values[p.id] * penalty;
+      });
+
+      updateRoundResults(currentRound, results);
+    }
 
     updateCurrentPlayerId();
 
     setIsModalOpen(false);
     setValues(Array(4).fill(0)); // Reset values after saving
+
+    if (currentRound == 20) {
+      findAndSetWinnerPlayer();
+      setIsGameOver(true);
+    }
   };
 
   if (!players) return null;
