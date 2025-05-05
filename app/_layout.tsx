@@ -1,9 +1,11 @@
 import { GameProvider } from "@/providers/game-provider";
 import { AntDesign } from "@expo/vector-icons";
 import { router, Stack } from "expo-router";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  GestureHandlerRootView,
+  Pressable,
+} from "react-native-gesture-handler";
 import "../global.css";
-import { TouchableOpacity } from "react-native";
 
 export default function RootLayout() {
   return (
@@ -40,9 +42,9 @@ export default function RootLayout() {
               headerTintColor: "orange",
               headerRight(props) {
                 return (
-                  <TouchableOpacity onPress={() => router.navigate("/table")}>
+                  <Pressable onPress={() => router.navigate("/table")}>
                     <AntDesign name="table" size={24} color={props.tintColor} />
-                  </TouchableOpacity>
+                  </Pressable>
                 );
               },
             }}

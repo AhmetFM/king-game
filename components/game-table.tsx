@@ -1,6 +1,7 @@
 import { GameContext, GameRound, Player } from "@/providers/game-provider";
 import React, { useContext } from "react";
-import { Dimensions, ScrollView, Text, View } from "react-native";
+import { Dimensions, Platform, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 const GameTable = () => {
   const { rounds, players } = useContext(GameContext);
@@ -16,7 +17,11 @@ const GameTable = () => {
   } */
 
   return (
-    <ScrollView className="flex-1 flex-col mt-10 w-full h-full">
+    <ScrollView
+      className={`flex-1 flex-col w-full h-full ${
+        Platform.OS == "android" ? "mt-20" : "mt-14"
+      } `}
+    >
       <View className="w-[100vw] border border-white h-20 flex-row">
         <SingleCard name="Oyuncular" />
         {players.map((p: Player) => (

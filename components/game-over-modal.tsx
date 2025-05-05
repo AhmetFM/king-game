@@ -8,7 +8,6 @@ const GameOverModal = () => {
 
   const [modal, setModal] = useState(true);
 
-  console.log(winnerId);
   if (winnerId === undefined) {
     setIsGameOver(false);
   }
@@ -21,7 +20,9 @@ const GameOverModal = () => {
             KAZANAN
           </Text>
           <Text className="text-white h-20 flex items-center justify-center font-bold text-2xl py-2">
-            {players[winnerId].name}
+            {players[winnerId].name === "Murat"
+              ? "Hacı Muro"
+              : players[winnerId].name}
           </Text>
           <TouchableOpacity
             className="text-center flex items-center justify-center h-12 bg-amber-600 w-2/3 rounded-md disabled:opacity-50"

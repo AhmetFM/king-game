@@ -1,7 +1,6 @@
 import {
   GameContext,
   getAvailablePenaltyGames,
-  penaltyGames,
   Player,
 } from "@/providers/game-provider";
 import { GAME_CONSTANTS } from "@/utils/gameLogic";
@@ -13,18 +12,19 @@ import {
 } from "@gorhom/bottom-sheet";
 import React, { useContext, useRef, useState } from "react";
 import {
+  Platform,
   Pressable,
-  ScrollView,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RoundModal from "./round-modal";
 
 const GameBoard = () => {
   const sheetRef = useRef<BottomSheetModal>(null);
-  const snapPoints = ["35%"];
+  const snapPoints = ["45%"];
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -60,7 +60,11 @@ const GameBoard = () => {
   };
 
   return (
-    <SafeAreaView className="w-full h-full flex-1">
+    <SafeAreaView
+      className={`w-full h-full flex-1 ${
+        Platform.OS == "android" ? "mt-20" : ""
+      } `}
+    >
       <BottomSheetModalProvider>
         {players &&
           players.map((player: Player, k: number) => (
@@ -126,9 +130,13 @@ const GameBoard = () => {
               <Text className="text-white text-xl">{player.score}</Text>
             </View>
           ))}
-        <View className="flex flex-row flex-wrap gap-4 items-center justify-center my-4">
+        <View
+          className={`flex flex-row flex-wrap gap-4 items-center justify-center my-4 ${
+            Platform.OS == "android" && "px-4 mt-8"
+          } `}
+        >
           {getAvailablePenaltyGames().map((p) => (
-            <Text className="text-white font-medium" key={p.name}>
+            <Text className="text-white font-medium text-lg" key={p.name}>
               {p.name} - {p.timesPlayed == 0 ? 2 : p.timesPlayed == 1 ? 1 : 0}
             </Text>
           ))}
@@ -139,7 +147,7 @@ const GameBoard = () => {
               className="flex items-center justify-center"
               onPress={() => sheetRef.current?.present()}
             >
-              <Text className="text-amber-400 text-xl">
+              <Text className="text-amber-400 text-2xl border-b border-amber-400 pb-1">
                 {selectedGame || "Oyunu seç"}
               </Text>
             </TouchableOpacity>
@@ -168,7 +176,7 @@ const GameBoard = () => {
             }}
           >
             <BottomSheetView className="bg-zinc-800 h-full">
-              <ScrollView>
+              <ScrollView bounces={false}>
                 {GAME_CONSTANTS.map((item) => {
                   const isValid =
                     getAvailablePenaltyGames()
@@ -202,7 +210,7 @@ const GameBoard = () => {
                 })}
               </ScrollView>
               <Pressable
-                className="flex items-center justify-center h-14 border-t border-amber-500 disabled:opacity-25 disabled:"
+                className="flex items-center justify-center h-20 border-t border-amber-500 disabled:opacity-25 disabled:"
                 onPress={() => {
                   if (selectedGame) {
                     sheetRef.current?.dismiss();

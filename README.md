@@ -1,50 +1,41 @@
-# Welcome to your Expo app 👋
+# King App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Bu uygulama, King oyununda skor takibi yapmanızı sağlayan bir mobil uygulamadır. Şu anda sadece Android platformunda kullanılabilir durumdadır.
 
-## Get started
+![image](/assets/images/king-preview.gif)
 
-1. Install dependencies
+## İndirme
 
-   ```bash
-   npm install
-   ```
+Uygulamayı aşağıdaki linkten indirebilirsiniz:
 
-2. Start the app
+[APK İndirme Linki](https://expo.dev/accounts/ahmetfm/projects/king-game/builds/a2b9f808-3675-4179-9c09-1df54cb26f28)
 
-   ```bash
-    npx expo start
-   ```
+> Not: iOS versiyonu şu anda mevcut değildir. Apple Developer hesabı gerektiğinden dolayı iOS sürümü daha sonra eklenecektir.
 
-In the output, you'll find options to open the app in a
+## Özellikler
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- King oyunu için özel skor takip sistemi
+- Kullanıcı dostu arayüz
+- Hızlı ve akıcı performans
+- Hafif ve optimize edilmiş yapı
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Kullanım
 
-## Get a fresh project
+1. Uygulamayı açın
+2. Yeni oyun başlatın
+3. Oyuncuları ekleyin
+4. Her el sonunda puanları girin
+5. Skor tablosunu takip edin
 
-When you're ready, run:
+## Geliştirme
+
+Projeyi geliştirmek için:
 
 ```bash
-npm run reset-project
+npm install
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## İletişim
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Sorularınız için bana ulaşabilirsiniz.

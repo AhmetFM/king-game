@@ -4,13 +4,13 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
-  ScrollView,
   Platform,
 } from "react-native";
 import React, { useContext, useState } from "react";
 import BackgroundContainer from "@/components/background-container";
 import { router } from "expo-router";
 import { GameContext } from "@/providers/game-provider";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Players = () => {
   const [playerNames, setPlayerNames] = useState(["", "", "", ""]);
@@ -31,7 +31,6 @@ const Players = () => {
 
     setPlayerValues(playerNames);
 
-    console.log("Starting game with players:", playerNames);
     router.push("/game");
   };
 

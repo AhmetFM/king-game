@@ -1,7 +1,6 @@
 import BackgroundContainer from "@/components/background-container";
 import { useRouter } from "expo-router";
-import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();

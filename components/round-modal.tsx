@@ -1,8 +1,9 @@
-import { View, Text, Modal, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, Pressable, TouchableOpacity, Modal } from "react-native";
 import React, { useContext, useState } from "react";
 import { GameContext, Player } from "@/providers/game-provider";
 import { AntDesign } from "@expo/vector-icons";
 import { GAME_CONSTANTS } from "@/utils/gameLogic";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type RoundModalProps = {
   isModalOpen: boolean;
@@ -33,7 +34,7 @@ const PlayerScore = ({
     >
       <AntDesign name="minus" size={24} />
     </Pressable>
-    <Text className="text-white">{value}</Text>
+    <Text className="text-white text-xl">{value}</Text>
     <Pressable
       disabled={isIncrementDisabled}
       className="w-16 h-8 rounded disabled:opacity-50 bg-yellow-400 flex items-center justify-center"
@@ -136,34 +137,36 @@ const RoundModal = ({ isModalOpen, setIsModalOpen }: RoundModalProps) => {
   if (!players) return null;
 
   return (
-    <Modal animationType="fade" transparent={true} visible={isModalOpen}>
-      <View className="flex items-center justify-center w-full h-full bg-black/50">
-        <View className="w-3/4 h-80 bg-zinc-800 shadow rounded-2xl flex items-center gap-1">
-          <Text className="text-white font-medium text-xl py-2 border-b text-center px-12 border-white">
-            {currentRound}. El
-          </Text>
+    <SafeAreaView>
+      <Modal animationType="fade" transparent={true} visible={isModalOpen}>
+        <View className="flex items-center justify-center w-full h-full bg-black/60">
+          <View className="w-3/4 h-80 bg-zinc-800 shadow rounded-2xl flex items-center gap-1">
+            <Text className="text-white font-medium text-2xl py-2 border-b text-center px-12 border-white">
+              {currentRound}. El
+            </Text>
 
-          {players.map((player: Player) => (
-            <PlayerScore
-              key={player.id}
-              player={player}
-              value={values[player.id]}
-              onIncrement={() => handleValueChange(player.id, true)}
-              onDecrement={() => handleValueChange(player.id, false)}
-              isIncrementDisabled={totalValue >= maxValue}
-            />
-          ))}
+            {players.map((player: Player) => (
+              <PlayerScore
+                key={player.id}
+                player={player}
+                value={values[player.id]}
+                onIncrement={() => handleValueChange(player.id, true)}
+                onDecrement={() => handleValueChange(player.id, false)}
+                isIncrementDisabled={totalValue >= maxValue}
+              />
+            ))}
 
-          <TouchableOpacity
-            className="text-center flex items-center justify-center h-12 bg-amber-600 w-2/3 rounded-md mt-2 disabled:opacity-50"
-            onPress={handleFinishRound}
-            disabled={totalValue != maxValue}
-          >
-            <Text className="text-white">Kaydet</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              className="text-center flex items-center justify-center h-12 bg-amber-600 w-2/3 rounded-md mt-2 disabled:opacity-50"
+              onPress={handleFinishRound}
+              disabled={totalValue != maxValue}
+            >
+              <Text className="text-white">Kaydet</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+    </SafeAreaView>
   );
 };
 
